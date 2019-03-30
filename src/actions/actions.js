@@ -6,6 +6,16 @@ export default {
         type: types.ADD_TEXT_AND_TAGS,
         payload: getTagsFromText(text)
     }),
+    getTextAndTags: () => {
+        fetch('/api')
+        .then(res => res.json())
+        .then(data => {
+            return {
+                type: types.GET_TEXT_AND_TAGS,
+                payload: data
+            }
+        });
+    },
 }
 
 function getTagsFromText(text) {
