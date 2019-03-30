@@ -1,14 +1,27 @@
-const { Client } = require('pg');
+const db = require('./db.js')
 
-const client = new Client({
-  user: 'tolgagrouse',
-  host: 'localhost',
-  database: 'jest'
-});
+let queryString = 'SELECT * FROM events';
+let insertString = 'INSERT INTO events'
 
-client.connect(err => {
-  if (err) console.log(err);
-  else console.log('Client connected to the database.');
-});
+const find = (req, res) => {
+  db.query(queryString, (err, db) => {
+    if (err) {
+      console.log('theres an error')
+    } else {
+      res.send(db.rows);
+    }
+  })
+}
 
-module.exports = client;
+// const insert = (req, res) => {
+//   db.query(queryString, (err, db) => {
+//     if (err) {
+//       console.log('theres an error')
+//     } else {
+//       res.send(db.rows);
+//     }
+//   })
+// }
+
+
+module.exports = { find };
