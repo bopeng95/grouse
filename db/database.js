@@ -28,16 +28,12 @@ const Event = sequelize.define('event', {
   tags: {
     type: Sequelize.STRING,
   },
-  // createdAt: {
-  //   type: Sequelize.DATE,
-  // },
 });
 
 
 let newEvent = {
   'text': 'hello', 
   'tags': 'react', 
-  // 'created': new Date(), 
 }
 
 sequelize.sync({ logging: console.log }).then(() => {

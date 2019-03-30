@@ -31,7 +31,11 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "cjs-loader": "^0.1.0",
+    "pg": "^7.9.0",
+    "pg-hstore": "^2.3.2",
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "sequelize": "^5.2.7"
   }
 }
