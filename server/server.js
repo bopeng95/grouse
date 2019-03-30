@@ -1,7 +1,8 @@
 const express = require('express');
 const app = express();
+const api = require('./routes/api');
 
-app.get('/api', (req, res) => res.send('YO'));
+app.use('/api', api);
 
 
 app.listen(3000, () => console.log('Listening on port 3000'));

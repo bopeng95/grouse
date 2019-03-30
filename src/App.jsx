@@ -1,17 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import MainContainer from './containers/MainContainer.jsx';
+import DataDisplay from './components/DataDisplay.jsx';
+import NavBar from './components/NavBar.jsx';
 
-class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-  render() {
-    return (
+function App() {
+  return (
+    <Router>
+      <NavBar />
       <div>
-        <p>HI</p>
+        <Route exact path='/' component={MainContainer} />
+        <Route path='/data' component={DataDisplay} />
       </div>
-    );
-  }
+    </Router>
+  );
 }
 
 export default App;
