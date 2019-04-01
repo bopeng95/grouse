@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
 
 class FeedItem extends Component {
   constructor(props) {
@@ -6,7 +7,7 @@ class FeedItem extends Component {
     this.state = {};
   }
   render() {
-    return <div>FeedItem</div>;
+    return <div className='feeditem'>FeedItem</div>;
   }
 }
 
