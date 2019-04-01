@@ -45,7 +45,7 @@ class InputBox extends Component {
         </Fragment>
         <br />
         <input
-          className='btn btn-outline-success'
+          className='btn btn-outline-primary'
           type='submit'
           value='Submit'
         />
