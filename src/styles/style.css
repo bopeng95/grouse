@@ -2,3 +2,7 @@ html,
 body {
   background-color: ghostwhite;
 }
+
+.graph {
+  padding:2rem;
+}

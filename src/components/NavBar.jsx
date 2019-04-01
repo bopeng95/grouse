@@ -15,7 +15,7 @@ class NavBar extends Component {
             <Link to='/'>Home</Link>
           </li>
           <li>
-            <Link to='data'>Data</Link>
+            <Link to='/data'>Data</Link>
           </li>
           <li>
             Search: <SearchBox />
