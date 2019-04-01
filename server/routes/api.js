@@ -1,8 +1,84 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const bodyParser = require('body-parser')
+const { User, Message, Tag } = require('../sequelize')
 
-router.get('/', (req, res) => {
-    res.json({});
+router.use(bodyParser.urlencoded({extended: false}))
+router.use(bodyParser.json())
+
+router.post('/users', (req, res) => {
+    User.create(req.body)
+        .then(user => res.json(user))
 })
 
+router.get('/users', (req, res) => {
+    User.findOne({where: {name: req.body.name}})
+        .then(users => res.json(users))
+})
+
+router.post('/messages', (req, res) => {
+    console.log('request body userID for posting messages', req.body.name)
+    console.log('request body tag for posting messages', req.body.tags)
+
+    const body = req.body;
+    // const tags = req.body.tags;
+    // either find a tag with name or create a new one
+    const tags = body.tags.map(tag => Tag.findOrCreate({ where: { name: tag.name }, defaults: { name: tag.name }}).spread((tag, created) => tag))
+    
+    // User.findByPk(body.userId)
+    //     .then(() => Message.create(body))
+    //     .then(message => Promise.all(tags).then(storedTags => message.addTags(storedTags)).then(() => message))
+    //     .then(message => Message.findOne({ where: {id: message.id}, include: [User, Tag]}))
+    //     .then(messageWithAssociations => res.json(messageWithAssociations))
+    //     .catch(err => res.status(400).json({ err: `User with id = [${body.userId}] doesn\'t exist.`}))
+    
+    User.findByPk(body.userId)
+        .then(() => Message.create(body))
+        .then(message => Promise.all(tags).then(storedTags => message.addTags(storedTags)).then(() => message))
+        .then(message => Message.findOne({ where: {id: message.id}, include: [User, Tag]}))
+        .then(messageWithAssociations => res.json(messageWithAssociations))
+        // .then(message => res.json(message))
+        .catch(err => console.log(err))
+})
+
+router.get('/messages/:userId?', (req, res) => {
+    let query;
+    if(req.params.userId) {
+        query = Message.findAll({ include: [
+            { model: User, where: { id: req.params.userId } },
+            { model: Tag }
+        ]})
+    } else if (req.body.tags) {
+        query = Message.findAll({ include: [
+            { model: Tag, where: { name: req.body.tags } },
+        ]})
+    } else {
+        query = Message.findAll({ include: [Tag, User]})
+    }
+    return query.then(messages => res.json(messages))
+})
+
+
 module.exports = router;
+
+// GET USER
+// {
+//     "name": "tolga"
+// }
+
+// POST USER
+// {
+//     "name": "tolga"
+// }
+
+// POST MESSAGE
+// {
+// 	"name": "bo peng",
+// 	"text": "i hate jquery and redux",
+// 	"tags": []
+// }
+
+// GET ALL MESSAGES
+// no need for req.body
+
+// GET 
