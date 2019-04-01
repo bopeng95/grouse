@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as d3 from 'd3';
+import Axios from 'axios';
 
 class DataDisplay extends Component {
   constructor(props) {
@@ -8,27 +9,49 @@ class DataDisplay extends Component {
       width: 800,
       height: 500,
       status: '',
-      data: [
-          {tag: 'India', value: 273},
-          {tag: 'USA', value: 2420},
-          {tag: 'China', value: 1270},
-          {tag: 'UK', value: 553},
-          {tag: 'Germany', value: 731},
-          {tag: 'Sweden', value: 136},
-          {tag: 'France', value: 682},
-          {tag: 'Australia', value: 239},
-          {tag: 'Canada', value: 367},
-          {tag: 'Brazil', value: 442}
-      ],
+      data: [],
     };
     this.drawGraph = this.drawGraph.bind(this);
   }
 
   componentDidMount() { 
-    if(this.state.data.length > 0) {
-      this.drawGraph();
-      this.setState({status: ''});
-    } else this.setState({status: 'No Data Yet'}) 
+    this.getTags()
+  }
+
+  getTags() {
+    Axios.get('/api/tags')
+      .then(({data}) => {
+        const output = {};
+
+        for (let i=0; i<data.length; i++) {
+          if (data[i].name !== null) {
+            if (!output[data[i].name]) {
+              output[data[i].name] = 1;
+            } else {
+              output[data[i].name]++
+            }
+          }
+        }
+
+        const result = []
+        
+        for (let key in output) {
+          result.push({
+            tag: key,
+            value: output[key]
+          })
+        }
+        
+        // console.log(data)
+        // console.log(result)
+
+        this.setState({data: result}, () => {
+          if(this.state.data.length > 0) {
+            this.drawGraph();
+            this.setState({status: ''});
+          } else this.setState({status: 'No Data Yet'}) 
+        })
+      })
   }
 
   getHighestValue() {
@@ -65,7 +88,7 @@ class DataDisplay extends Component {
       .domain(data.map(d => d[tech]))
       .range([0, width]);
     const yScale = d3.scaleLinear()
-      .domain([0, this.getHighestValue() + 250])
+      .domain([0, this.getHighestValue()])
       .range([height, 0]);
     const colorScale = d3.scaleOrdinal(d3.schemeCategory10);
 

@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
+
 import styled from 'styled-components';
 
 const StyledDiv = styled.div`
-  border: 1px solid lightgrey;
   margin: auto;
-  padding: 2em;
-  width: 60%;
-  align-items: center;
   justify-content: center;
   display: flex;
 `;
@@ -14,12 +11,11 @@ const StyledDiv = styled.div`
 class FeedItem extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
   render() {
     return (
       <React.Fragment>
-        <StyledDiv className='feeditem'>FeedItem</StyledDiv>
+        <StyledDiv className='feeditem'>{this.props.message}</StyledDiv>
         <br />
       </React.Fragment>
     );
