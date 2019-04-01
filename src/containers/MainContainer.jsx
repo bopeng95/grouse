@@ -28,37 +28,35 @@ class MainContainer extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/messages', {
-    }).then((data) => {
+    axios.get('/api/messages', {}).then(data => {
+      const resultArr = [];
 
-      const resultArr = []
-      for (let i=0; i<data.data.length; i++) {
-        resultArr.push(data.data[i].text)
+      for (let i = data.data.length - 1; i > 0; i--) {
+        resultArr.push(data.data[i].text);
       }
-
       this.setState({
-        messages: resultArr.reverse(),
+        messages: resultArr,
         shouldFeedUpdate: true
-      }, () => console.log('*******', this.state.messages))
-    })
+      });
+    });
   }
 
   handleSubmit(event) {
     event.preventDefault();
 
-    axios.post('/api/messages', {
-      name: null,
-      text: this.state.newMessage,
-      tags: {name: this.state.tag}
-    }).then((data) => console.log('**** data posting', data))
+    axios
+      .post('/api/messages', {
+        name: null,
+        text: this.state.newMessage,
+        tags: { name: this.state.tag }
+      })
+      .then(data => console.log('**** data posting', data));
 
     this.setState({
       messages: [this.state.newMessage, ...this.state.messages.slice()],
       newMessage: '',
       shouldFeedUpdate: true
     });
-
-    // console.log(this.state);
   }
 
   handleChange({ target }) {

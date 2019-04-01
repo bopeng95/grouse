@@ -7,7 +7,16 @@ const StyledTextarea = styled.textarea`
   margin: 1em;
 `;
 
-const TAGS = ['React', 'Redux', 'Node', 'JQuery'];
+const TAGS = [
+  'React',
+  'Redux',
+  'Node',
+  'jQuery',
+  'Webpack',
+  'Vue',
+  'PostgreSQL',
+  'MongoDB'
+];
 
 class InputBox extends Component {
   constructor(props) {
