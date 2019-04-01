@@ -4,5 +4,8 @@ body {
 }
 
 .graph {
-  padding:2rem;
+  margin:2rem;
+  text-align: center;
+  overflow: scroll;
 }
+
