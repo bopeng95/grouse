@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const bodyParser = require('body-parser')
-const { User, Message, Tag } = require('../sequelize')
+const bodyParser = require('body-parser');
+const { User, Message, Tag } = require('../sequelize');
 
-router.use(bodyParser.urlencoded({extended: false}))
-router.use(bodyParser.json())
+router.use(bodyParser.urlencoded({ extended: false }));
+router.use(bodyParser.json());
 
 router.post('/users', (req, res) => {
-    User.create(req.body)
-        .then(user => res.json(user))
-})
+  User.create(req.body).then(user => res.json(user));
+});
 
 router.get('/users', (req, res) => {
-    User.findOne({where: {name: req.body.name}})
-        .then(users => res.json(users))
-})
+  User.findOne({ where: { name: req.body.name } }).then(users =>
+    res.json(users)
+  );
+});
 
 router.post('/messages', (req, res) => {
     const body = req.body;
@@ -54,6 +54,24 @@ router.get('/messages', (req, res) => {
     return query.then(messages => res.json(messages))
 })
 
+router.get('/messages/:userId?', (req, res) => {
+  let query;
+  if (req.params.userId) {
+    query = Message.findAll({
+      include: [
+        { model: User, where: { id: req.params.userId } },
+        { model: Tag }
+      ]
+    });
+  } else if (req.body.tags) {
+    query = Message.findAll({
+      include: [{ model: Tag, where: { name: req.body.tags } }]
+    });
+  } else {
+    query = Message.findAll({ include: [Tag, User] });
+  }
+  return query.then(messages => res.json(messages));
+});
 
 module.exports = router;
 

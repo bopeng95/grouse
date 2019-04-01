@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import MainContainer from './containers/MainContainer.jsx';
 import DataDisplay from './components/DataDisplay.jsx';
 import NavBar from './components/NavBar.jsx';
@@ -9,11 +9,11 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <div>
+      <Switch>
         <Route exact path='/' component={MainContainer} />
         <Route path='/login' component={LSContainer} />
         <Route path='/data' component={DataDisplay} />
-      </div>
+      </Switch>
     </Router>
   );
 }
