@@ -1,4 +1,9 @@
 html,
 body {
-  background-color: ghostwhite;
+  background-color: white;
+  font-family: Helvetica, sans-serif;
+}
+
+.graph {
+  padding:2rem;
 }

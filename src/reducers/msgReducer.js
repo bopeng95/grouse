@@ -1,18 +1,23 @@
 import types from './../actions/actionTypes';
 
 const initialState = {
-    msg: []
-}
+  msg: []
+};
 
 const msgReducer = (state = initialState, action) => {
-    switch(action.type) {
-        case types.ADD_TEXT_AND_TAGS:
-            const m = state.slice();
-            m.push(action.payload);
-            return { ...state, m }
-        default:
-            return state;
-    }
-}
+  let msg;
+  switch (action.type) {
+    case types.ADD_TEXT_AND_TAGS:
+      msg = state.msg.slice();
+      msg.push(action.payload);
+      return { ...state, msg };
+    case types.GET_TEXT_AND_TAGS:
+      msg = state.msg.slice();
+      msg = action.payload;
+      return { ...state, msg };
+    default:
+      return state;
+  }
+};
 
 export default msgReducer;
