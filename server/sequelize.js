@@ -5,7 +5,13 @@ const TagModel = require('./models/tag')
 
 const sequelize = new Sequelize('grouse', 'tolgagrouse', 'ip1000', {
   host: 'localhost',
-  dialect: 'postgres'
+  dialect: 'postgres',
+  pool: {
+    max: 10,
+    min: 0,
+    acquire: 30000,
+    idle: 10000
+  }
 });
 
 const User = UserModel(sequelize, Sequelize)
@@ -18,7 +24,7 @@ Message.belongsToMany(Tag, { through: MessageTag, unique: false })
 Tag.belongsToMany(Message, { through: MessageTag, unique: false })
 Message.belongsTo(User);
 
-sequelize.sync({ force: true })
+sequelize.sync({ force: false })
   .then(() => {
     console.log(`Database & tables created!`)
   })
@@ -28,8 +34,3 @@ module.exports = {
   Message,
   Tag
 }
-
-
-// sequelize.sync({ logging: console.log }).then(() => {
-//   return Event.create(newEvent)
-// })
