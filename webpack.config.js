@@ -29,6 +29,7 @@ module.exports = {
   plugins: [new webpack.HotModuleReplacementPlugin()],
   devServer: {
     contentBase: path.join(__dirname),
+    historyApiFallback: true,
     publicPath: '/',
     hot: true,
     proxy: {
