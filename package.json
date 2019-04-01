@@ -31,8 +31,10 @@
     "webpack-dev-server": "^3.2.1"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "body-parser": "^1.18.3",
     "cjs-loader": "^0.1.0",
+    "cors": "^2.8.5",
     "d3": "^5.9.2",
     "pg": "^7.9.0",
     "pg-hstore": "^2.3.2",
