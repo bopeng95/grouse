@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import FeedItem from '../components/FeedItem.jsx';
+import styled from 'styled-components';
 // import { connect } from 'react-redux';
 // import { bindActionCreators } from 'redux';
 // import * as actions from '../actions/actions';

@@ -4,16 +4,15 @@ import MainContainer from './containers/MainContainer.jsx';
 import DataDisplay from './components/DataDisplay.jsx';
 import NavBar from './components/NavBar.jsx';
 import LSContainer from './containers/LSContainer.jsx';
+import FeedContainer from './containers/FeedContainer.jsx';
 
 function App() {
   return (
     <Router>
       <NavBar />
-      <div>
-        <Route exact path='/' component={MainContainer} />
-        <Route path='/login' component={LSContainer} />
-        <Route path='/data' component={DataDisplay} />
-      </div>
+      <Route exact path='/' component={MainContainer} />
+      <Route path='/login' component={LSContainer} />
+      <Route path='/data' component={DataDisplay} />
     </Router>
   );
 }
