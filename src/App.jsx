@@ -7,14 +7,14 @@ import LSContainer from './containers/LSContainer.jsx';
 
 function App() {
   return (
-    <div>
+    <Router>
       <NavBar />
       <Switch>
         <Route exact path='/' component={MainContainer} />
         <Route path='/login' component={LSContainer} />
         <Route path='/data' component={DataDisplay} />
       </Switch>
-    </div>
+    </Router>
   );
 }
 

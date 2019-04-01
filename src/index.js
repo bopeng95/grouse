@@ -3,7 +3,6 @@ import { render } from 'react-dom';
 // import { Provider } from 'react-redux';
 // import store from './store';
 import App from './App.jsx';
-import { BrowserRouter as Router } from 'react-router-dom';
 
 if (module.hot) module.hot.accept();
 
@@ -14,10 +13,4 @@ if (module.hot) module.hot.accept();
 //     document.getElementById('root')
 // );
 
-render(
-  <Router>
-    <App />
-  </Router>,
-
-  document.getElementById('root')
-);
+render(<App />, document.getElementById('root'));
