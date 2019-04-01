@@ -6,7 +6,6 @@ const StyledDiv = styled.div`
   margin: auto;
   justify-content: center;
   display: flex;
-  padding-top: 0.8em;
 `;
 
 class FeedItem extends Component {
