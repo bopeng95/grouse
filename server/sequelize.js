@@ -12,10 +12,25 @@ const TagModel = require('./models/tag');
 
 // Nel's login info
 
+// const sequelize = new Sequelize({
+//   host: 'localhost',
+//   dialect: 'postgres',
+//   user: 'nel',
+//   database: 'grouse',
+//   pool: {
+//     max: 10,
+//     min: 0,
+//     acquire: 30000,
+//     idle: 10000
+//   }
+// });
+
+// Bo's info
+
 const sequelize = new Sequelize({
   host: 'localhost',
   dialect: 'postgres',
-  user: 'nel',
+  user: 'bopeng',
   database: 'grouse',
   pool: {
     max: 10,
