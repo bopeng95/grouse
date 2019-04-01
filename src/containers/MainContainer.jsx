@@ -28,9 +28,8 @@ class MainContainer extends Component {
   }
 
   componentDidMount() {
-    axios.get('/api/messages', {}).then(data => {
+    axios.get('/api/messages').then(data => {
       const resultArr = [];
-
       for (let i = data.data.length - 1; i > 0; i--) {
         resultArr.push(data.data[i].text);
       }
@@ -43,15 +42,11 @@ class MainContainer extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-
-    axios
-      .post('/api/messages', {
-        name: null,
-        text: this.state.newMessage,
-        tags: { name: this.state.tag }
-      })
-      .then(data => console.log('**** data posting', data));
-
+    axios.post('/api/messages', {
+      name: null,
+      text: this.state.newMessage,
+      tags: { name: this.state.tag }
+    });
     this.setState({
       messages: [this.state.newMessage, ...this.state.messages.slice()],
       newMessage: '',

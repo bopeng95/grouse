@@ -15,43 +15,36 @@ class DataDisplay extends Component {
   }
 
   componentDidMount() { 
-    this.getTags()
+    this.getTags();
   }
 
   getTags() {
     Axios.get('/api/tags')
-      .then(({data}) => {
-        const output = {};
-
-        for (let i=0; i<data.length; i++) {
-          if (data[i].name !== null) {
-            if (!output[data[i].name]) {
-              output[data[i].name] = 1;
-            } else {
-              output[data[i].name]++
-            }
+    .then(({data}) => {
+      const output = {};
+      for (let i=0; i<data.length; i++) {
+        if (data[i].name !== null) {
+          if (!output[data[i].name]) {
+            output[data[i].name] = 1;
+          } else {
+            output[data[i].name]++
           }
         }
-
-        const result = []
-        
-        for (let key in output) {
-          result.push({
-            tag: key,
-            value: output[key]
-          })
-        }
-        
-        // console.log(data)
-        // console.log(result)
-
-        this.setState({data: result}, () => {
-          if(this.state.data.length > 0) {
-            this.drawGraph();
-            this.setState({status: ''});
-          } else this.setState({status: 'No Data Yet'}) 
+      }
+      const result = []
+      for (let key in output) {
+        result.push({
+          tag: key,
+          value: output[key]
         })
+      }
+      this.setState({data: result}, () => {
+        if(this.state.data.length > 0) {
+          this.drawGraph();
+          this.setState({status: ''});
+        } else this.setState({status: 'No Data Yet'});
       })
+    })
   }
 
   getHighestValue() {
