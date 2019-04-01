@@ -44,7 +44,7 @@ router.post('/messages', (req, res) => {
 //     return query.then(messages => res.json(messages))
 // })
 
-router.get('/messages', (req, res) => {
+router.get('/tags', (req, res) => {
     let query;
     if (req.body.tags) {
         query = Tag.findAll({ include: [Tag, User]})
@@ -54,24 +54,30 @@ router.get('/messages', (req, res) => {
     return query.then(messages => res.json(messages))
 })
 
-router.get('/messages/:userId?', (req, res) => {
-  let query;
-  if (req.params.userId) {
-    query = Message.findAll({
-      include: [
-        { model: User, where: { id: req.params.userId } },
-        { model: Tag }
-      ]
-    });
-  } else if (req.body.tags) {
-    query = Message.findAll({
-      include: [{ model: Tag, where: { name: req.body.tags } }]
-    });
-  } else {
-    query = Message.findAll({ include: [Tag, User] });
-  }
-  return query.then(messages => res.json(messages));
-});
+router.get('/messages', (req, res) => {
+    let query;
+    query = Message.findAll();
+    return query.then(messages => res.json(messages));
+})
+
+// router.get('/messages/:userId?', (req, res) => {
+//   let query;
+//   if (req.params.userId) {
+//     query = Message.findAll({
+//       include: [
+//         { model: User, where: { id: req.params.userId } },
+//         { model: Tag }
+//       ]
+//     });
+//   } else if (req.body.tags) {
+//     query = Message.findAll({
+//       include: [{ model: Tag, where: { name: req.body.tags } }]
+//     });
+//   } else {
+//     query = Message.findAll({ include: [Tag, User] });
+//   }
+//   return query.then(messages => res.json(messages));
+// });
 
 module.exports = router;
 

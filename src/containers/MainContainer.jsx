@@ -27,27 +27,38 @@ class MainContainer extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  componentDidMount() {
+    axios.get('/api/messages', {
+    }).then((data) => {
+
+      const resultArr = []
+      for (let i=0; i<data.data.length; i++) {
+        resultArr.push(data.data[i].text)
+      }
+
+      this.setState({
+        messages: resultArr.reverse(),
+        shouldFeedUpdate: true
+      }, () => console.log('*******', this.state.messages))
+    })
+  }
+
   handleSubmit(event) {
     event.preventDefault();
 
-    axios.post('http://localhost:3000/api/messages', {
+    axios.post('/api/messages', {
       name: null,
       text: this.state.newMessage,
-      tags: []
-    });
-
-    // separate route for tags?
-    // axios.post('http://localhost:3000/api/tags'), {
-    //   tags: [this.state.tag]
-    // }
+      tags: {name: this.state.tag}
+    }).then((data) => console.log('**** data posting', data))
 
     this.setState({
-      messages: [...this.state.messages.slice(), this.state.newMessage],
+      messages: [this.state.newMessage, ...this.state.messages.slice()],
       newMessage: '',
       shouldFeedUpdate: true
     });
 
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   handleChange({ target }) {
